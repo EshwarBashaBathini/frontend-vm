@@ -162,6 +162,7 @@ function AttachmentItem({ filename, filesize, icon, fileUrl }) {
     const link = document.createElement("a");
     link.href = fileUrl;
     link.setAttribute("download", filename); // Set download filename
+    link.setAttribute("target", "_blank");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
