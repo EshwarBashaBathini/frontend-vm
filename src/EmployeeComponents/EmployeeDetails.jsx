@@ -169,7 +169,7 @@ function AttachmentItem({ filename, filesize, icon, fileUrl }) {
 
        
 
-    };
+    
  
     return (
         <li className="flex items-center justify-between py-4 pl-3 pr-4 text-lg bg-gray-50 rounded-md">
