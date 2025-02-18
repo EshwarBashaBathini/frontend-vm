@@ -176,7 +176,6 @@ function AttachmentItem({ filename, filesize, icon, fileUrl }) {
         const downloadFilename = filename || "default_filename"; // Fallback to a default name if filename is not provided
 
         // Open the file URL in a new tab (optional, if you want to view it before download)
-        window.open(encodedFileUrl, '_blank'); // This line opens the URL in a new tab
 
         console.log("Downloading file from URL:", encodedFileUrl);
         console.log("Download filename:", downloadFilename);
@@ -185,7 +184,7 @@ function AttachmentItem({ filename, filesize, icon, fileUrl }) {
         const link = document.createElement("a");
         link.href = encodedFileUrl; // Use the encoded URL
         link.setAttribute("download", downloadFilename); // Set download filename to ensure correct file name
-        link.setAttribute("target", "_blank"); // Optional, if you want the file to open in a new tab first
+       
 
         // Append the link, trigger the download, then remove the link
         document.body.appendChild(link);
