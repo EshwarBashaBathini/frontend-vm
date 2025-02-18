@@ -157,11 +157,12 @@ function AttachmentItem({ filename, filesize, icon, fileUrl }) {
     const handleDownload = () => {
     // Open the file URL in a new tab
     window.open(fileUrl, '_blank'); // Opens the URL in a new tab
-
+    console.log(fileUrl)
+    console.log(filename)
     // Trigger the download functionality
     const link = document.createElement("a");
     link.href = fileUrl;
-    link.setAttribute("download", filename); // Set download filename
+    link.setAttribute("download", fileUrl); // Set download filename
     link.setAttribute("target", "_blank");
     document.body.appendChild(link);
     link.click();
