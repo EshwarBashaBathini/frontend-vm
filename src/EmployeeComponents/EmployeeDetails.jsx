@@ -164,19 +164,42 @@ function AttachmentItem({ filename, filesize, icon, fileUrl }) {
     // };
        const handleDownload = async () => {
         try {
-            const response = await fetch(fileUrl);
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", filename);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url); // Clean up
-        } catch (error) {
-            console.error("Download failed:", error);
-        }
+    // Fetch the file from the backend URL
+    const response = await fetch(fileUrl);
+
+    // Check if the response is successful (status 200)
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Convert the response to a Blob (binary data)
+    const blob = await response.blob();
+
+    // Create a URL for the Blob
+    const url = window.URL.createObjectURL(blob);
+
+    // Create an anchor element for triggering the download
+    const link = document.createElement("a");
+
+    // Set the download attribute with the desired filename
+    link.href = url;
+    link.setAttribute("download", filename);
+
+    // Append the link to the body (needed for clicking)
+    document.body.appendChild(link);
+
+    // Simulate a click on the link to start the download
+    link.click();
+
+    // Clean up: remove the link and revoke the URL
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
+} catch (error) {
+    // Log any errors that occur during the fetch or download process
+    console.error("Download failed:", error);
+}
+
     };
  
     return (
