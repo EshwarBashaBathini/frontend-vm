@@ -154,20 +154,44 @@ function InfoItem({ icon, label, value, fullWidth = false, highlight = false }) 
 }
  
 function AttachmentItem({ filename, filesize, icon, fileUrl }) {
-    const handleDownload = () => {
-    // Open the file URL in a new tab
-    window.open(fileUrl, '_blank'); // Opens the URL in a new tab
-    console.log(fileUrl)
-    console.log(filename)
-    // Trigger the download functionality
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.setAttribute("download", fileUrl); // Set download filename
-    link.setAttribute("target", "_blank");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-};
+//     const handleDownload = () => {
+//     // Open the file URL in a new tab
+//     window.open(fileUrl, '_blank'); // Opens the URL in a new tab
+//     console.log(fileUrl)
+//     console.log(filename)
+//     // Trigger the download functionality
+//     const link = document.createElement("a");
+//     link.href = fileUrl;
+//     link.setAttribute("download", fileUrl); // Set download filename
+//     link.setAttribute("target", "_blank");
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+// };
+       const handleDownload = () => {
+        // URL encode the file URL to handle special characters
+        const encodedFileUrl = encodeURI(fileUrl);
+
+        // Define the filename you want to save it as
+        const downloadFilename = filename || "default_filename"; // Fallback to a default name if filename is not provided
+
+        // Open the file URL in a new tab (optional, if you want to view it before download)
+        window.open(encodedFileUrl, '_blank'); // This line opens the URL in a new tab
+
+        console.log("Downloading file from URL:", encodedFileUrl);
+        console.log("Download filename:", downloadFilename);
+
+        // Trigger the download functionality
+        const link = document.createElement("a");
+        link.href = encodedFileUrl; // Use the encoded URL
+        link.setAttribute("download", downloadFilename); // Set download filename to ensure correct file name
+        link.setAttribute("target", "_blank"); // Optional, if you want the file to open in a new tab first
+
+        // Append the link, trigger the download, then remove the link
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
        
 
