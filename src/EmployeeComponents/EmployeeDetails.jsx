@@ -154,13 +154,29 @@ function InfoItem({ icon, label, value, fullWidth = false, highlight = false }) 
 }
  
 function AttachmentItem({ filename, filesize, icon, fileUrl }) {
-    const handleDownload = () => {
-        const link = document.createElement("a");
-        link.href = fileUrl;
-        link.setAttribute("download", filename); // Set download filename
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    // const handleDownload = () => {
+    //     const link = document.createElement("a");
+    //     link.href = fileUrl;
+    //     link.setAttribute("download", filename); // Set download filename
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     document.body.removeChild(link);
+    // };
+       const handleDownload = async () => {
+        try {
+            const response = await fetch(fileUrl);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url); // Clean up
+        } catch (error) {
+            console.error("Download failed:", error);
+        }
     };
  
     return (
